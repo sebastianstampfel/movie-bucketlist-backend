@@ -1,6 +1,7 @@
+const config = require('./config')
 const express = require('express')
 const app = express()
-const port = 80
+const port = config.SERVER_PORT
 // MySQL Stuff
 /**
 * ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '##SETPASSWORDHERE##'
@@ -8,10 +9,10 @@ const port = 80
 */
 var mysql = require('mysql')
 var connection = mysql.createConnection({
-	host: 'localhost',
-	user: 'root',
-	password: 'artoss2007',
-	database: 'moviebucketlist'
+	host: config.MYSQL_HOST,
+	user: config.MYSQL_USER,
+	password: config.MYSQL_PASS,
+	database: config.MYSQL_DATABASE
 })
 
 app.use(express.json());
@@ -100,5 +101,5 @@ app.put('/unset-watched', function (req, res) {
 
 app.listen(port, ()=> {
 	connection.connect()
-	console.log('Backend server listening on port 80')
+	console.log(`Backend server listening on port ${port}`)
 })

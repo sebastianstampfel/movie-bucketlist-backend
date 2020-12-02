@@ -1,0 +1,7 @@
+module.exports = {
+    MYSQL_HOST: 'HOST',
+    MYSQL_USER: 'USERNAME',
+    MYSQL_PASS: 'PASSWORD',
+    MYSQL_DATABASE: 'DATABASE',
+    SERVER_PORT: '80'
+}
