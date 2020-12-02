@@ -1,0 +1,6 @@
+version: "3.3"
+services:
+  jake-movielist-backend:
+    build: .
+    ports:
+      - "6666:6666"
