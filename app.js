@@ -15,7 +15,19 @@ var connection = mysql.createConnection({
 	database: config.MYSQL_DATABASE
 })
 
+/**
+* Setup JSON parser for parsing json request bodies
+*/
 app.use(express.json());
+
+/**
+* Setup CORS
+*/
+app.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*") // Allow requests from everywhere
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
+})
 
 /**
  * Gets a list of all movies.
