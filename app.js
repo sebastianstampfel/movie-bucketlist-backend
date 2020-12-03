@@ -99,7 +99,7 @@ app.put('/unset-watched', function (req, res) {
 	})
 })
 
-app.listen(port, ()=> {
+app.listen(port, "0.0.0.0", ()=> {
 	connection.connect()
 	console.log(`Backend server listening on port ${port}`)
 })
