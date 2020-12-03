@@ -16,6 +16,40 @@ var connection = mysql.createConnection({
 })
 
 /**
+ * Shuffles an array using the Fisher-Yates-Shuffle.
+ * Stolen from https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+ * 
+ * @param array 
+ */
+function shuffle(array) {
+	var currentIndex = array.length, temporaryValue, randomIndex;
+
+	// While there remain elements to shuffle...
+	while (0 !== currentIndex) {
+
+		// Pick a remaining element...
+		randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex -= 1;
+
+		// And swap it with the current element.
+		temporaryValue = array[currentIndex];
+		array[currentIndex] = array[randomIndex];
+		array[randomIndex] = temporaryValue;
+	}
+
+	return array;
+}
+
+/**
+ * Generates a random number between 0 and max
+ * Taken from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+ * @param {int} max Max number in random range
+ */
+function getRandomInt(max) {
+	return Math.floor(Math.random() * Math.floor(max));
+}
+
+/**
 * Setup JSON parser for parsing json request bodies
 */
 app.use(express.json());
@@ -37,6 +71,21 @@ app.get('/movies',(req, res) => {
 	connection.query('SELECT * from movies', function (err, rows, fields){
 		if (err) throw err
 		res.json(rows)
+	})
+})
+
+/**
+ * Gets a random unwatched movie
+ * Returns a single movie
+ */
+app.get('/random-movie',(req, res) => {
+	connection.query('SELECT * from movies WHERE Watched="0"', function (err, rows, fields){
+		if (err) throw err
+		//res.json(rows.length)
+		var arr = rows
+		shuffle(arr)
+		const movieNumber = getRandomInt(arr.length)
+		res.json(arr[movieNumber])
 	})
 })
 
@@ -74,6 +123,10 @@ app.get('/watched',(req, res) => {
 		res.json(rows)
 	})
 })
+
+/**
+ * PUT REQUESTS
+ */
 
 /**
  * Sets a movie to "watched".
