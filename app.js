@@ -97,7 +97,20 @@ app.get('/random-movie',(req, res) => {
 app.get('/movie/:movieId',(req, res) => {
 	const id = req.params.movieId
 
-	connection.query(`SELECT * from movies WHERE Ranking=${id}`, function (err, rows, fields){
+	connection.query(`SELECT * from movies WHERE Ranking=?`,[id], function (err, rows, fields){
+		if (err) throw err
+		res.json(rows[0])
+	})
+})
+
+/**
+ * Gets a specific movie by RID.
+ * Returns single movie.
+ */
+app.get('/movie/rid/:movieRID',(req, res) => {
+	const id = req.params.movieRID
+
+	connection.query(`SELECT * from movies WHERE RID=?`,[movieRID], function (err, rows, fields){
 		if (err) throw err
 		res.json(rows[0])
 	})
@@ -136,11 +149,11 @@ app.get('/watched',(req, res) => {
 app.put('/set-watched', function (req, res) {
 	const movieId = req.body["movieId"]
 	// UPDATE `moviebucketlist`.`movies` SET `Watched` = '0' WHERE (`Ranking` = '1');
-	connection.query('UPDATE `moviebucketlist`.`movies` SET `Watched` = "1" WHERE (`Ranking` = "' + movieId + '")', function (err, rows, fields){
+	connection.query('UPDATE `moviebucketlist`.`movies` SET `Watched` = "1" WHERE (`Ranking` = "?")', [movieId], function (err, rows, fields){
 		if (err){
 			res.json(err)
 		}
-		connection.query('SELECT * from movies WHERE Ranking="' + movieId + '"', function (err, rows, fields){
+		connection.query('SELECT * from movies WHERE Ranking="?"', [movieId], function (err, rows, fields){
 			if (err) throw err
 			res.json(rows)
 		})
@@ -154,11 +167,11 @@ app.put('/set-watched', function (req, res) {
 app.put('/unset-watched', function (req, res) {
 	const movieId = req.body["movieId"]
 	// UPDATE `moviebucketlist`.`movies` SET `Watched` = '0' WHERE (`Ranking` = '1');
-	connection.query('UPDATE `moviebucketlist`.`movies` SET `Watched` = "0" WHERE (`Ranking` = "' + movieId + '")', function (err, rows, fields){
+	connection.query('UPDATE `moviebucketlist`.`movies` SET `Watched` = "0" WHERE (`Ranking` = "?")', [movieId], function (err, rows, fields){
 		if (err){
 			res.json(err)
 		}
-		connection.query('SELECT * from movies WHERE Ranking="' + movieId + '"', function (err, rows, fields){
+		connection.query('SELECT * from movies WHERE Ranking="?"', [movieId], function (err, rows, fields){
 			if (err) throw err
 			res.json(rows)
 		})
