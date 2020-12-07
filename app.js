@@ -110,7 +110,7 @@ app.get('/movie/:movieId',(req, res) => {
 app.get('/movie/rid/:movieRID',(req, res) => {
 	const id = req.params.movieRID
 
-	connection.query(`SELECT * from movies WHERE RID=?`,[movieRID], function (err, rows, fields){
+	connection.query(`SELECT * from movies WHERE RID=?`,[id], function (err, rows, fields){
 		if (err) throw err
 		res.json(rows[0])
 	})
