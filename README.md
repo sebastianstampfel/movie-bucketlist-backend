@@ -18,6 +18,11 @@ $ cp config-sample.js config.js
 ```
 and edit the configuration to contain your database settings.
 
+If you want to manually run this application, perform the following steps:
+```
+$ npm install
+$ node app.js
+```
 ## Endpoints
 ### /movies
 Gets the full list of movies from the database.
