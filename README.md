@@ -12,6 +12,12 @@ $ docker-compose run -d
 ```
 should suffice.
 
+A sample MySQL-Table can be found in `res/movies.sql`. Also, prior to running do not forget to
+```
+$ cp config-sample.js config.js
+```
+and edit the configuration to contain your database settings.
+
 ## Endpoints
 ### /movies
 Gets the full list of movies from the database.
