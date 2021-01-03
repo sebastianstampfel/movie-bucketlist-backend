@@ -12,8 +12,7 @@ $ docker-compose run -d
 ```
 should suffice.
 
-##Endpoints
-
+## Endpoints
 ### /movies
 Gets the full list of movies from the database.
 
